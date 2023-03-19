@@ -154,16 +154,85 @@
           </tr>
           <tbody id="search_result"></tbody>
           <?php foreach($result as $row){ ?>
-          <td><?=$row["user_id"];?></td>
-          <td><?=$row["user"];?></td>
-          <td><?=$row["pw"];?></td>
-          <td><?=$row["user_name"];?></td>
-          <td><?php switch($row["role"]){ case 0: echo"管理員"; case 0: echo"一般使用者"; break;}?></td>
-          <td>
-            
-          </td>
+          <tr class="show-all">
+            <td><?=$row["user_id"];?></td>
+            <td><?=$row["user"];?></td>
+            <td><?=$row["pw"];?></td>
+            <td><?=$row["user_name"];?></td>
+            <td><?php switch($row["role"]){case 0: echo "管理員"; break; case 1: echo "一般使用者"; break;}?></td>
+            <td>
+              <?php if($row["id"] == 1) {?>
+
+              <?php } elseif ($row["id"] == $_SESSION["AUTH"]["id"]) { ?>
+              <span class="text-secondary">修改權限</span>
+              <?php } else { ?>
+              <a href="switch_role.php?role=<?=$row["role"];?>&<?=$row["id"];?>"
+                class="btn btn-outline-secondary">修改權限</a>
+              <?php } ; ?>
+              <?php if($row["id"] == 1) {?>
+              <?php } else { ?>
+              <button class="btn btn-outline-secondary" id="edit-member" data-id=<?=$row["id"];?> data-toggle="modal"
+                data-target="#edit">修改</button>
+              <!-- Modal -->
+              <div class="modal fade" id="edit">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">修改使用者</h5>
+                      <button class="close" data-dismiss="modal">
+                        <span>&times</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="p-4">
+                        <div class="py-2">
+                          <label for="">使用者帳號</label>
+                          <input type="text" name="user" id="user" class="form-control my-2" require>
+                        </div>
+                        <div class="py-2">
+                          <label for="">使用者姓名</label>
+                          <input type="text" name="user_name" id="user_name" class="form-control my-2" require>
+                        </div>
+                        <div class="py-2">
+                          <label for="">使用者密碼</label>
+                          <input type="password" name="pw" id="pw" class="form-control" require>
+                          <input type="hidden" name="id" id="id">
+                        </div>
+                        <div class="text-right">
+                          <button type="button" class="btn btn-success" id="save-member">儲存修改</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="delete_member.php?id=<?=$row["id"]?>;" class="btn btn-outline-danger"
+                onclick="return confirm('確定要刪除?')">刪除</a>
+              <?php }?>
+            </td>
+          </tr>
           <?php }; ?>
         </table>
+        <!-- Modal -->
+        <div class="modal fade" id="confirmModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">系統提示</h5>
+                <button class="close" data-dismiss="modal">
+                  <span>&times</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>您的操作時間已到，系統將在<span id="countdownModal">5</span>秒後自動登出，請問您是否繼續操作?</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelBtn">取消</button>
+                <button type="button" class="btn btn-warning" id="continuBtn">繼續操作</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -171,5 +240,13 @@
 <script src="./js/jquery.min.js"></script>
 <script src="./js/bootstrap.js"></script>
 <script src="./js/script.js"></script>
-
+<script>
+  let timeLeft = 60;
+  let timer, confirmTimer, counter;
+  const startConfirmTimer = () => {
+    confirmTimer = setTimeout(() => {
+      
+    }, 1000);
+  }
+</script>
 </html>
