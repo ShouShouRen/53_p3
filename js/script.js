@@ -3,7 +3,7 @@ $(function () {
     let selectedCells = [];
     $("td[data-id]").click(function () {
       const index = $(this).data("id") - 1;
-      if (selectedCells.length < 2 && selectedCells.includes(index)) {
+      if (selectedCells.length < 2 && !selectedCells.includes(index)) {
         selectedCells.push(index);
         $(this).addClass("selected");
       } else if (selectedCells.includes(index)) {
@@ -24,10 +24,11 @@ $(function () {
           alert("登入成功");
           window.location.href = "index.php";
         } else {
-          alert("二次驗證失敗");
-          window.location.href = "login.php";
+          alert("二次驗證錯誤");
+          location.href = "logout.php";
         }
       }
     });
   }
+  check();
 });
