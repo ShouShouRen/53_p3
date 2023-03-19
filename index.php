@@ -1,6 +1,9 @@
 <?php
   session_start();
   require_once("pdo.php");
+  if(!isset($_SESSION["AUTH"])){
+    header("Location: logout.php");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +43,7 @@
         </div>
       </div>
     </nav>
+
   </div>
 </body>
 <script src="./js/jquery.min.js"></script>
