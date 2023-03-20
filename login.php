@@ -1,3 +1,6 @@
+<?php 
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 
@@ -49,7 +52,7 @@
             <input type="submit" class="btn btn-light" value="確認登入">
           </div>
         </form>
-        <?php unset($_SESSION["error"]) ;?>
+        <?php unset($_SESSION['error']); ?>
       </div>
     </div>
   </div>

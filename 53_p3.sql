@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2023-03-20 04:05:44
+-- 產生時間： 2023-03-20 04:39:03
 -- 伺服器版本： 10.4.27-MariaDB
 -- PHP 版本： 8.2.0
 
@@ -43,7 +43,12 @@ INSERT INTO `login_log` (`user`, `login_time`, `status`) VALUES
 ('admin', '2023-03-19 20:01:46', '登入成功'),
 ('admin', '2023-03-19 21:31:21', '登出成功'),
 ('coffee', '2023-03-19 21:31:29', '登入成功'),
-('coffee', '2023-03-19 21:37:20', '登出成功');
+('coffee', '2023-03-19 21:37:20', '登出成功'),
+('admin', '2023-03-20 11:33:22', '登出成功'),
+('coffee', '2023-03-20 11:33:30', '登入失敗'),
+('coffee', '2023-03-20 11:34:45', '登入失敗'),
+('coffee', '2023-03-20 11:34:51', '登入失敗'),
+('admin', '2023-03-20 11:38:34', '登入成功');
 
 -- --------------------------------------------------------
 
@@ -67,8 +72,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_des`, `price`, `links`, `time`, `images`, `template`) VALUES
-(1, '咖啡商品01', '咖啡好喝', '100', 'coffee.com', '2023-03-20 11:03:32', 'ea4c6ed619391d1a7e658e09221558d0.jpg', '1'),
-(2, '咖啡商品02', '好喝的咖啡', '200', 'coffee.com', '2023-03-20 11:04:41', 'c45181e604ad8ddfe1560a863f0d9d03.jpg', '2');
+(1, '咖啡商品01', '咖啡好喝', '100', 'coffee.com', '2023-03-20 11:30:10', 'ea4c6ed619391d1a7e658e09221558d0.jpg', '1'),
+(2, '咖啡商品02', '好喝的咖啡02', '200', 'coffee.com', '2023-03-20 11:30:21', 'c45181e604ad8ddfe1560a863f0d9d03.jpg', '2'),
+(3, '咖啡商品03', '好喝的咖啡03', '300', 'coffee.com', '2023-03-20 11:31:09', '5a53d7cce44b6ebcf99c8d52d22933e7.jpg', '4'),
+(4, '咖啡商品04', '好喝的咖啡04', '400', 'coffee.com', '2023-03-20 11:32:02', 'bd5f447e6d7fdbc9c2fef85c3eb3da23.jpg', '3');
 
 -- --------------------------------------------------------
 
@@ -120,7 +127,7 @@ ALTER TABLE `users`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
