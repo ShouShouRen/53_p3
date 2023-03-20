@@ -165,8 +165,8 @@ $(function () {
         $("#product_des").val(response[0].product_des);
         $("#price").val(response[0].price);
         $("#links").val(response[0].links);
-        let imagePath = "./images/"+response[0].images;
-        $("#current-image").attr("src",imagePath);
+        let imagePath = "./images/" + response[0].images;
+        $("#current-image").attr("src", imagePath);
       },
     });
   });
@@ -174,12 +174,12 @@ $(function () {
   $(".saveproduct").click(function (e) {
     e.preventDefault();
     let formData = new FormData();
-    formData.append("id",$("#id").val());
-    formData.append("product_name",$("#product_name").val());
-    formData.append("product_des",$("#product_des").val());
-    formData.append("price",$("#price").val());
-    formData.append("links",$("#links").val());
-    formData.append("images",$("#images")[0].files[0]);
+    formData.append("id", $("#id").val());
+    formData.append("product_name", $("#product_name").val());
+    formData.append("product_des", $("#product_des").val());
+    formData.append("price", $("#price").val());
+    formData.append("links", $("#links").val());
+    formData.append("images", $("#images")[0].files[0]);
     $.ajax({
       url: "update_product.php",
       type: "POST",
@@ -188,6 +188,57 @@ $(function () {
       contentType: false,
       success: function (response) {
         window.location.reload();
+      },
+    });
+  });
+  $("#search-member").submit(function (e) {
+    e.preventDefault();
+    let search = $("#search-input").val();
+    let use = $('input[name="use"]:checked').val();
+    $.ajax({
+      url: "search_member.php",
+      type: "post",
+      data: {
+        search: search,
+        use: use,
+      },
+      success: function (response) {
+        console.log(response);
+        $("#search_result").html(response);
+        $(".show-all").addClass("d-none");
+      },
+    });
+  });
+
+  $("#search-product").submit(function (e) {
+    e.preventDefault();
+    let search = $("#search-input").val();
+    let minPrice = $("#min-price-input").val();
+    let maxPrice = $("#max-price-input").val();
+
+    $.ajax({
+      url: "search_product.php",
+      type: "post",
+      data: {
+        search: search,
+        min_price: minPrice,
+        max_price: maxPrice,
+      },
+      success: function (response) {
+        console.log(response);
+        let search_res = $("#search-results");
+        search_res.html(response);
+        if (search_res.children().length == 1) {
+          search_res.children().addClass("col-12");
+          search_res.children().removeClass("col-6");
+        } else if (search_res.children().length == 0) {
+          search_res.append(
+            "<div class='d-center text-center text-white h1'>查無資料</div>"
+          );
+          setTimeout(function () {
+            window.location.reload();
+          }, 2500);
+        }
       },
     });
   });

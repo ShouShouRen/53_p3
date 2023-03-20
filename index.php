@@ -1,6 +1,7 @@
 <?php
   session_start();
   require_once("pdo.php");
+  extract($_POST);
   if(!isset($_SESSION["AUTH"])){
     header("Location: logout.php");
   }
@@ -10,7 +11,7 @@
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 
 <head>
   <meta charset="UTF-8">
@@ -47,16 +48,17 @@
     </div>
   </nav>
   <div class="container" style="margin-top: 86px;">
-    <div class="row justify-content-between align-items-center pt-4 pb-5">
-      <h5 class="text-white font-weight-bolder border-start">商品展示</h5>
-      <form class="d-flex justify-content-end align-items-center" id="search-product">
-        <input type="search" name="search" class="form-control w-25 mx-1" id="search-input" placeholder="請輸入商品名稱">
+    <div class="row pt-3 pb-5 justify-content-between">
+      <h5 class="font-weight-bolder text-center text-white border-start">商品展示</h5>
+      <form id="search-product" class="d-flex justify-content-end align-items-center" action="search_product.php"
+        method="post">
+        <input type="search" name="search" id="search-input" class="form-control w-25 mx-1" placeholder="請輸入商品名稱">
         <input type="number" name="min_price" id="min-price-input" class="form-control w-25 mx-1" placeholder="最低價格">
         <input type="number" name="max_price" id="max-price-input" class="form-control w-25 mx-1" placeholder="最高價格">
         <button type="submit" class="btn btn-secondary">查詢</button>
       </form>
       <div class="row justify-content-start mt-4" id="search-results">
-        <?php foreach($result as $row) {?>
+        <?php foreach ($result as $row) { ?>
         <?php if ($row["template"] == 1) { ?>
         <div class="col-6 h-380">
           <div class="d-flex text-center bg-back px-2 py-3 flex-wrap">
@@ -78,7 +80,7 @@
             <div class="col-12 mt-2">
               <?php
                 if ($_SESSION["AUTH"]["role"] == 0) {
-                    echo "<button class='btn btn-secondary btn-sm getproduct' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
+                    echo "<button class='btn btn-secondary btn-sm edit-product' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
                 }
               ?>
             </div>
@@ -105,7 +107,7 @@
             <div class="col-12 mt-2">
               <?php
                 if ($_SESSION["AUTH"]["role"] == 0) {
-                    echo "<button class='btn btn-secondary btn-sm getproduct' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
+                    echo "<button class='btn btn-secondary btn-sm edit-product' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
                 }
               ?>
             </div>
@@ -133,7 +135,7 @@
             <div class="col-12 mt-2">
               <?php
                 if ($_SESSION["AUTH"]["role"] == 0) {
-                    echo "<button class='btn btn-secondary btn-sm getproduct' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
+                    echo "<button class='btn btn-secondary btn-sm edit-product' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
                 }
               ?>
             </div>
@@ -160,7 +162,7 @@
             <div class="col-12 mt-2">
               <?php
                 if ($_SESSION["AUTH"]["role"] == 0) {
-                    echo "<button class='btn btn-secondary btn-sm getproduct' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
+                    echo "<button class='btn btn-secondary btn-sm edit-product' data-toggle='modal' data-id='" . $row['id'] . "' data-target='#edit-product'>編輯</button>";
                 }
               ?>
             </div>
@@ -209,7 +211,7 @@
                   <input type="text" class="form-control w-75" id="links" name="links">
                 </div>
                 <div class="text-right my-3">
-                  <input type="submit" class="btn btn-primary saveproduct" value="儲存">
+                  <input type="submit" class="btn btn-primary" id="save-product" value="儲存">
                 </div>
                 <input type="hidden" name="id" id="id">
               </form>
