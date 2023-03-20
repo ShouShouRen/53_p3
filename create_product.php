@@ -40,8 +40,10 @@ session_start();
     </div>
   </nav>
   <div class="container" style="margin-top: 86px;">
-    <div class="row justify-content-between align-items-center py-3">
-      <h5 class="border-start text-light">上架管理</h5>
+    <div class="pt-4 pb-3">
+      <div class="row justify-content-between align-items-center">
+        <h5 class="border-start text-light">上架管理</h5>
+      </div>
     </div>
     <div class="row">
       <div class="col-12 bg-white p-3 shadow-lg rounded-lg" style="min-height: 780px">
@@ -183,7 +185,7 @@ session_start();
             </div>
             <div class="tab-pane fade" id="preview"></div>
             <div class="tab-pane fade" id="submit">
-            <div class="d-flex justify-content-center align-items-center" style="height:708px">
+              <div class="d-flex justify-content-center align-items-center" style="height:708px">
                 <button class="btn btn-success" type="submit">確認送出</button>
               </div>
             </div>
