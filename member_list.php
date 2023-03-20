@@ -14,7 +14,7 @@
   $result_log = $stmt_log->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 
 <head>
   <meta charset="UTF-8">
@@ -26,7 +26,6 @@
 </head>
 
 <body>
-
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
       <a href="index.php" class="navbar-brand">
@@ -51,8 +50,8 @@
       </div>
     </div>
   </nav>
-  <div class="container" style="margin-top: 86px">
-    <div class="pt-4 pb-5">
+  <div class="container" style="margin-top: 86px;">
+    <div class="pt-3 pb-5">
       <div class="row justify-content-between align-items-center">
         <h5 class="text-center text-white border-start font-weight-bolder">會員管理</h5>
         <div class="row justify-content-around align-items-center text-white py-3 w-25">
@@ -62,7 +61,7 @@
           <button id="resetTimeBtn" class="btn btn-sm btn-outline-light">重新計時</button>
         </div>
       </div>
-      <div class="p-4 bg-white shadow-lg rounded-lg">
+      <div class="p-4 bg-white rounded-lg shadow-lg">
         <div class="row justify-content-center align-itmes-center mb-3">
           <div class="col-6">
             <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#adduser">新增使用者</button>
@@ -152,8 +151,10 @@
             <th>使用者權限</th>
             <th>操作</th>
           </tr>
-          <tbody id="search_result"></tbody>
-          <?php foreach($result as $row){ ?>
+          <tbody id="search_result">
+
+          </tbody>
+          <?php foreach($result as $row) {?>
           <tr class="show-all">
             <td><?=$row["user_id"];?></td>
             <td><?=$row["user"];?></td>
@@ -161,17 +162,18 @@
             <td><?=$row["user_name"];?></td>
             <td><?php switch($row["role"]){case 0: echo "管理員"; break; case 1: echo "一般使用者"; break;}?></td>
             <td>
-              <?php if($row["id"] == 1) {?>
+              <?php if ($row["id"] == 1) { ?>
 
               <?php } elseif ($row["id"] == $_SESSION["AUTH"]["id"]) { ?>
-              <span class="text-secondary">修改權限</span>
+              <span class="text-secondary">權限修改</span>
               <?php } else { ?>
-              <a href="switch_role.php?role=<?=$row["role"]?>&id=<?=$row["id"];?>"
+              <a href="switch_role.php?role=<?=$row["role"];?>&id=<?=$row["id"];?>"
                 class="btn btn-outline-secondary">修改權限</a>
-              <?php } ; ?>
-              <?php if($row["id"] == 1) {?>
+              <?php } ;?>
+              <?php if ($row["id"] == 1) { ?>
+
               <?php } else { ?>
-              <button class="btn btn-outline-secondary" id="edit-member" data-id="<?=$row['id'];?>" data-toggle="modal"
+              <button class="btn btn-outline-secondary getmember" data-id="<?=$row['id'];?>" data-toggle="modal"
                 data-target="#edit">修改</button>
               <!-- Modal -->
               <div class="modal fade" id="edit">
@@ -180,7 +182,7 @@
                     <div class="modal-header">
                       <h5 class="modal-title">修改使用者</h5>
                       <button class="close" data-dismiss="modal">
-                        <span aria-hidden="true">&times</span>
+                        <span>&times</span>
                       </button>
                     </div>
                     <div class="modal-body">
@@ -199,19 +201,19 @@
                           <input type="hidden" name="id" id="id">
                         </div>
                         <div class="text-right">
-                          <button type="button" class="btn btn-success" id="save-member">儲存修改</button>
+                          <button type="button" class="btn btn-success savemember">儲存修改</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-              <a href="delete_member.php?id=<?=$row["id"]?>" class="btn btn-outline-danger"
+              <a href="delete_member.php?id=<?=$row["id"];?>" class="btn btn-outline-danger"
                 onclick="return confirm('確定要刪除?')">刪除</a>
-              <?php }?>
+              <?php } ;?>
             </td>
           </tr>
-          <?php }; ?>
+          <?php } ;?>
         </table>
         <!-- Modal -->
         <div class="modal fade" id="confirmModal">
@@ -220,15 +222,15 @@
               <div class="modal-header">
                 <h5 class="modal-title">系統提示</h5>
                 <button class="close" data-dismiss="modal">
-                  <span>&times</span>
+                  <span aria-hidden="true">&times</span>
                 </button>
               </div>
               <div class="modal-body">
-                <p>您的操作時間已到，系統將在<span id="countdownModal">5</span>秒後自動登出，請問您是否繼續操作?</p>
+                您的操作時間已到，系統將在 <span id="countdownModal">5</span> 秒後自動登出。請問您是否要繼續操作？
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelBtn">取消</button>
-                <button type="button" class="btn btn-warning" id="continuBtn">繼續操作</button>
+                <button type="button" class="btn btn-warning" id="continueBtn">繼續操作</button>
               </div>
             </div>
           </div>
@@ -241,13 +243,82 @@
 <script src="./js/bootstrap.js"></script>
 <script src="./js/script.js"></script>
 <script>
-let timeLeft = 60;
-let timer, confirmTimer, counter;
+let timeleft = 60;
+let timer, confirmTimer;
+let counter;
 const startConfirmTimer = () => {
   confirmTimer = setTimeout(() => {
-
+    let count = 4;
+    counter = setInterval(() => {
+      $('#countdownModal').text(count--);
+      if (count < 0) {
+        window.location.href = 'logout.php';
+        clearInterval(counter);
+      }
+    }, 1000);
   }, 1000);
-}
+};
+
+const stopConfirmTimer = () => {
+  clearTimeout(confirmTimer);
+};
+
+const startTimer = () => {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    $('#countdown').html(`${timeleft--} 秒`);
+    if (timeleft < 0) {
+      clearInterval(timer);
+      $('#confirmModal').modal('show');
+      startConfirmTimer();
+    }
+  }, 1000);
+};
+
+const resetConfirmTimer = () => {
+  stopConfirmTimer();
+  $('#confirmModal').modal('hide');
+  timeleft = parseInt($('#timeInput').val());
+  startTimer();
+};
+
+const setTime = () => {
+  timeleft = parseInt($('#timeInput').val());
+  startTimer();
+};
+
+const resetTime = () => {
+  clearInterval(timer);
+  timeleft = parseInt($('#timeInput').val());
+  startTimer();
+};
+
+$('#setTimeBtn').on('click', setTime);
+$('#resetTimeBtn').on('click', resetTime);
+
+$('#timerModal').on('show.bs.modal', () => {
+  clearInterval(timer);
+  setTime();
+});
+
+$('#timerModal').on('hide.bs.modal', () => clearInterval(timer));
+
+$('#continueBtn').on('click', () => {
+  stopConfirmTimer();
+  resetConfirmTimer();
+  $('#confirmModal').modal('hide');
+  resetTime();
+  clearInterval(counter);
+  clearTimeout(confirmTimer);
+});
+
+$('#cancelBtn').on('click', () => {
+  window.location.href = 'logout.php';
+});
+$("#confirmModal").on("hidden.bs.modal",()=>{
+    $("#countdownModal").text(5)
+})
+setTime();
 </script>
 
 </html>
