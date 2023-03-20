@@ -149,4 +149,25 @@ $(function () {
       },
     });
   });
+
+  $(".getproduct").click(function () {
+    let product_id = $(this).data("id");
+    $.ajax({
+      url: "get_product.php",
+      type: "GET",
+      data: {
+        id: product_id,
+      },
+      dataType: "json",
+      success: function (response) {
+        $("#id").val(response[0].id);
+        $("#product_name").val(response[0].product_name);
+        $("#product_des").val(response[0].product_des);
+        $("#price").val(response[0].price);
+        $("#links").val(response[0].links);
+        let imagePath = "./images/" + response[0].images;
+        $("#current-image").attr("src", imagePath);
+      },
+    });
+  });
 });
