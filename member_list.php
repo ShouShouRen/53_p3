@@ -166,12 +166,12 @@
               <?php } elseif ($row["id"] == $_SESSION["AUTH"]["id"]) { ?>
               <span class="text-secondary">修改權限</span>
               <?php } else { ?>
-              <a href="switch_role.php?role=<?=$row["role"];?>&<?=$row["id"];?>"
+              <a href="switch_role.php?role=<?=$row["role"]?>&id=<?=$row["id"];?>"
                 class="btn btn-outline-secondary">修改權限</a>
               <?php } ; ?>
               <?php if($row["id"] == 1) {?>
               <?php } else { ?>
-              <button class="btn btn-outline-secondary" id="edit-member" data-id=<?=$row["id"];?> data-toggle="modal"
+              <button class="btn btn-outline-secondary" id="edit-member" data-id="<?=$row['id'];?>" data-toggle="modal"
                 data-target="#edit">修改</button>
               <!-- Modal -->
               <div class="modal fade" id="edit">
@@ -180,7 +180,7 @@
                     <div class="modal-header">
                       <h5 class="modal-title">修改使用者</h5>
                       <button class="close" data-dismiss="modal">
-                        <span>&times</span>
+                        <span aria-hidden="true">&times</span>
                       </button>
                     </div>
                     <div class="modal-body">
@@ -206,7 +206,7 @@
                   </div>
                 </div>
               </div>
-              <a href="delete_member.php?id=<?=$row["id"]?>;" class="btn btn-outline-danger"
+              <a href="delete_member.php?id=<?=$row["id"]?>" class="btn btn-outline-danger"
                 onclick="return confirm('確定要刪除?')">刪除</a>
               <?php }?>
             </td>
@@ -241,12 +241,13 @@
 <script src="./js/bootstrap.js"></script>
 <script src="./js/script.js"></script>
 <script>
-  let timeLeft = 60;
-  let timer, confirmTimer, counter;
-  const startConfirmTimer = () => {
-    confirmTimer = setTimeout(() => {
-      
-    }, 1000);
-  }
+let timeLeft = 60;
+let timer, confirmTimer, counter;
+const startConfirmTimer = () => {
+  confirmTimer = setTimeout(() => {
+
+  }, 1000);
+}
 </script>
+
 </html>
