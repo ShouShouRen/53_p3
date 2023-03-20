@@ -197,7 +197,7 @@
                         </div>
                         <div class="py-2">
                           <label for="">使用者密碼</label>
-                          <input type="password" name="pw" id="pw" class="form-control" require>
+                          <input type="text" name="pw" id="pw" class="form-control" require>
                           <input type="hidden" name="id" id="id">
                         </div>
                         <div class="text-right">
@@ -243,82 +243,7 @@
 <script src="./js/bootstrap.js"></script>
 <script src="./js/script.js"></script>
 <script>
-let timeleft = 60;
-let timer, confirmTimer;
-let counter;
-const startConfirmTimer = () => {
-  confirmTimer = setTimeout(() => {
-    let count = 4;
-    counter = setInterval(() => {
-      $('#countdownModal').text(count--);
-      if (count < 0) {
-        window.location.href = 'logout.php';
-        clearInterval(counter);
-      }
-    }, 1000);
-  }, 1000);
-};
 
-const stopConfirmTimer = () => {
-  clearTimeout(confirmTimer);
-};
-
-const startTimer = () => {
-  clearInterval(timer);
-  timer = setInterval(() => {
-    $('#countdown').html(`${timeleft--} 秒`);
-    if (timeleft < 0) {
-      clearInterval(timer);
-      $('#confirmModal').modal('show');
-      startConfirmTimer();
-    }
-  }, 1000);
-};
-
-const resetConfirmTimer = () => {
-  stopConfirmTimer();
-  $('#confirmModal').modal('hide');
-  timeleft = parseInt($('#timeInput').val());
-  startTimer();
-};
-
-const setTime = () => {
-  timeleft = parseInt($('#timeInput').val());
-  startTimer();
-};
-
-const resetTime = () => {
-  clearInterval(timer);
-  timeleft = parseInt($('#timeInput').val());
-  startTimer();
-};
-
-$('#setTimeBtn').on('click', setTime);
-$('#resetTimeBtn').on('click', resetTime);
-
-$('#timerModal').on('show.bs.modal', () => {
-  clearInterval(timer);
-  setTime();
-});
-
-$('#timerModal').on('hide.bs.modal', () => clearInterval(timer));
-
-$('#continueBtn').on('click', () => {
-  stopConfirmTimer();
-  resetConfirmTimer();
-  $('#confirmModal').modal('hide');
-  resetTime();
-  clearInterval(counter);
-  clearTimeout(confirmTimer);
-});
-
-$('#cancelBtn').on('click', () => {
-  window.location.href = 'logout.php';
-});
-$("#confirmModal").on("hidden.bs.modal",()=>{
-    $("#countdownModal").text(5)
-})
-setTime();
 </script>
 
 </html>
