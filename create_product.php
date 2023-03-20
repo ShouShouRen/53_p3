@@ -153,19 +153,19 @@ session_start();
                 <div class="col-8">
                   <div class="bg-white p-4 rounded-lg">
                     <h4 class="text-center my-5">填寫資料</h4>
-                    <div class="d-flex justify-content-between align-items-center my-3">
+                    <div class="d-flex align-items-center justify-content-between my-3">
                       <label for="">商品標題:</label>
                       <input type="text" class="form-control w-75" name="product_name">
                     </div>
-                    <div class="d-flex justify-content-between align-items-center my-3">
+                    <div class="d-flex align-items-center justify-content-between my-3">
                       <label for="">商品描述:</label>
-                      <input type="text" class="form-control w-75" name="product_des">
+                      <textarea name="product_des" class="form-control w-75"></textarea>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center my-3">
+                    <div class="d-flex align-items-center justify-content-between my-3">
                       <label for="">發布日期:</label>
-                      <input type="text" class="form-control w-75" name="time">
+                      <input type="datetime-local" class="form-control w-75" name="time" value="<?=$now;?>">
                     </div>
-                    <div class="d-flex justify-content-between align-items-center my-3">
+                    <div class="d-flex align-items-center justify-content-between my-3">
                       <label for="">圖片:</label>
                       <input type="file" name="images">
                     </div>
@@ -182,17 +182,20 @@ session_start();
               </div>
             </div>
             <div class="tab-pane fade" id="preview"></div>
-            <div class="tab-pane fade" id="submit"></div>
+            <div class="tab-pane fade" id="submit">
+            <div class="d-flex justify-content-center align-items-center" style="height:708px">
+                <button class="btn btn-success" type="submit">確認送出</button>
+              </div>
+            </div>
           </div>
       </div>
     </div>
     </form>
   </div>
-  </div>
-  </div>
 </body>
 <script src="./js/jquery.min.js"></script>
 <script src="./js/bootstrap.js"></script>
 <script src="./js/script.js"></script>
+<script src="./js/template.js"></script>
 
 </html>
